@@ -1,0 +1,31 @@
+//STEP 1 (Effettuare il deploy) - Creazione immagine, login e deploy su google cloud run 
+
+1. Creo app (controller, service ecc)
+1.1  ./mvnw clean package e creo JAR
+1.2 docker build -t demo-app . 
+2. Creo Dockerfile ti permette di impacchettare tutta l’app Java, insieme a tutto quello che serve per farla funzionare, e CREO UNA IMMAGINE DOCKER TRAMITE QUESTO
+2.1 Avvio Container docker run -p 8080:8080 myapp (se la mia immagine si chiama myapp)
+
+3. Faccio gcloud auth login e gcloud auth configure-docker
+3.1 docker tag demo-app gcr.io/custom-curve-464617-r6/demo-app --- serve per rinominare un'immagine Docker locale, in modo che tu possa caricarla su Google Container Registry (ora ci stiamo preparando per il deploy - Deploy significa rendere un'applicazione disponibile e funzionante in un ambiente reale, accessibile da utenti o da altri sistemi.)
+3.2 Abilita su GCP per il tuo progetto il Artifact Registry API
+3.3 docker push gcr.io/custom-curve-464617-r6/demo-app --- fai il push
+
+4 gcloud run deploy demo-app \
+  --image=gcr.io/custom-curve-464617-r6/demo-app \
+  --platform=managed \
+  --region=europe-west1 \
+  --allow-unauthenticated
+
+4.1 Elimina deploy da Cloud Run o 
+gcloud run services delete demo-app \
+  --platform=managed \
+  --region=europe-west1
+
+
+//STEP 2 (Automatizza il deploy) - Ogni volta che faccio il push su github, google deve:
+- Costruisce l'immagine dal tuo Dockerfile
+- La carica su Artifact Registry
+- La deploya automaticamente su Cloud Run 
+
+
