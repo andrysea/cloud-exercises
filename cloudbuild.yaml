@@ -1,4 +1,9 @@
 steps:
+  # Step 0: Compila l'app Java con Maven
+  - name: 'gcr.io/cloud-builders/mvn'
+    args: ['clean', 'package']
+    dir: '.'  # cartella del progetto Java
+    
   # Step 1: Build Docker image
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/$PROJECT_ID/demo-app', '.']
