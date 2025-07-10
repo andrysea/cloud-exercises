@@ -10,7 +10,7 @@ env:
   GKE_CLUSTER: demo-cluster
   GKE_REGION: us
   DEPLOYMENT_NAME: demo-app
-  IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/demo-app
+  IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/demo-app:latest
 
 jobs:
   build-deploy:
@@ -29,7 +29,7 @@ jobs:
           export_default_credentials: true
 
       - name: Configure Docker to use gcloud
-        run: gcloud auth configure-docker
+        run: gcloud auth configure-docker gcr.io
 
       - name: Build Docker image
         run: docker build -t $IMAGE_NAME .
