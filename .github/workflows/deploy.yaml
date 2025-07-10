@@ -8,7 +8,7 @@ on:
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   GKE_CLUSTER: demo-cluster
-  GKE_REGION: europe-west1
+  GKE_REGION: us
   DEPLOYMENT_NAME: demo-app
   IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/demo-app
 
