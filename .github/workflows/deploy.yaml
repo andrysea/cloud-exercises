@@ -8,9 +8,9 @@ on:
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   GKE_CLUSTER: demo-cluster
-  GKE_REGION: us
+  GKE_REGION: europe-west1
   DEPLOYMENT_NAME: demo-app
-  IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/demo-app:latest
+  IMAGE_NAME: europe-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/docker-repo/demo-app:latest
 
 jobs:
   build-deploy:
@@ -28,8 +28,8 @@ jobs:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
 
-      - name: Configure Docker to use gcloud
-        run: gcloud auth configure-docker gcr.io
+      - name: Auth Docker for Artifact Registry
+        run: gcloud auth configure-docker europe-west1-docker.pkg.dev
 
       - name: Build Docker image
         run: docker build -t $IMAGE_NAME .
