@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  PROJECT_ID: custom-curve-464617-r6
+  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   GKE_CLUSTER: demo-cluster
   GKE_REGION: europe-west1
   DEPLOYMENT_NAME: demo-app
