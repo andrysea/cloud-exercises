@@ -1,14 +1,11 @@
-# Dice a Docker: “Usa un sistema operativo base (Alpine Linux) che ha già Java 17 installato.” con FROM imposto la base dell'immagine
-FROM eclipse-temurin:17.0.10_7-jdk
-
-# Imposta la directory di lavoro
+# Step 1: build con Maven
+FROM maven:3.9.3-eclipse-temurin-17 AS build
 WORKDIR /app
-
-#Esegui comando mvn
+COPY . .
 RUN mvn clean package -DskipTests
 
-# Copia il file .jar dal tuo computer dentro la cartella /app del container e lo rinomina app.jar.
-COPY target/demo-0.0.1-SNAPSHOT.jar app.jar
-
-# Comando per avviare l'app
+# Step 2: immagine finale Java con solo il .jar
+FROM eclipse-temurin:17.0.10_7-jdk
+WORKDIR /app
+COPY --from=build /app/target/demo-0.0.1-SNAPSHOT.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
