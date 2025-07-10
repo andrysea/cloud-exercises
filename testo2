@@ -1,0 +1,39 @@
+KUBERNETES (GKE)
+| Concetto             | Equivalente                               |
+| -------------------- | ----------------------------------------- |
+| `Deployment`         | Il "come" e "quanti" pod girano           |
+| `Pod`                | Singola istanza della tua app             |
+| `Service`            | IP/porta interno per far comunicare i pod |
+| `Ingress`            | Accesso HTTP/HTTPS da esterno             |
+| `ConfigMap / Secret` | Variabili di ambiente e configurazioni    |
+
+Fino ad ora abbiamo usato cloud run che è una piattaforma serverless costruita sopra Kubernetes.
+Entrambi possono far girare la stessa immagine Docker della tua app.
+
+Esempio:
+| Concetto                           | Cloud Run                                | GKE (Kubernetes)                     |
+| ---------------------------------- | ---------------------------------------- | ------------------------------------ |
+| 🚗 Auto                            | Un'auto a guida autonoma                 | Un'auto manuale con tutti i comandi  |
+| 🔧 Gestione nodi, cluster, scaling | ✖️ No, gestito da Google                 | ✅ Sì, gestito da te                  |
+| 📦 Deployment                      | Solo container HTTP/HTTPS                | Qualunque tipo di workload           |
+| 🔌 Networking interno tra app      | Limitato                                 | Esteso (service, DNS, ingress, etc.) |
+| 💼 Uso tipico                      | Microservizi semplici, API REST, webhook | Architetture complesse, piattaforme  |
+| ⚠️ Complessità                     | Molto bassa                              | Alta (ma flessibile)                 |
+
+
+STEP:
+- Abilita GKE, gcloud services enable container.googleapis.com
+
+- Crea Cluster autopilot: 
+gcloud container clusters create-auto demo-cluster \
+  --region=europe-west1
+
+- Installa il plugin:
+gcloud components install gke-gcloud-auth-plugin
+
+- Connettiti al cluster:
+gcloud container clusters get-credentials demo-cluster \
+  --region=europe-west1
+
+- Eseguire i file yaml (deployment e service)
+

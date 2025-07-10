@@ -28,7 +28,7 @@ gcloud run services delete demo-app \
 - La carica su Artifact Registry
 - La deploya automaticamente su Cloud Run 
 
-1. Crea file pipeline.yaml
+1. Crea file cloudbuild.yaml
 2. Collegamento github - gcp, esegui:
 
 gcloud beta builds repositories create \
@@ -42,7 +42,7 @@ gcloud beta builds triggers create repository \
   --name="trigger-demo-app" \
   --repository="https://github.com/andrysea/cloud-exercises" \
   --branch-pattern="^main$" \
-  --build-config="pipeline.yaml"
+  --build-config="cloudbuild.yaml"
 
   oppure
 
@@ -51,7 +51,7 @@ gcloud beta builds triggers create repository \
   --repo-owner="andrysea" \
   --repo-name="https://github.com/andrysea/cloud-exercises" \
   --branch-pattern="^main$" \
-  --build-config="pipeline.yaml"
+  --build-config="cloudbuild.yaml"
 
 
 

@@ -1,0 +1,26 @@
+CI/CD completo su GKE.
+Obiettivo: ogni volta che fai un push su GitHub, la tua app Java viene:
+
+- Compilata (mvn package)
+- Containerizzata (Docker)
+- Pushata su Artifact Registry
+- Deployata automaticamente su GKE con kubectl
+
+STEP 1:
+- Crea cartelle e file: .github/workflows/deploy.yaml
+
+STEP 2:
+- Scrivi deploy.yaml
+
+STEP 3:
+- Vai su github e crea service account
+- Aggiungi come ruoli: 
+    -- Kubernetes Engine Developer
+    -- Storage Admin (per push immagini)
+    -- Artifact Registry Writer (se usi Artifact Registry)
+- Creo service account e scarico JSON
+
+STEP 4:
+- Vai su github e vai su settings / secret and variables / actions
+- AGGIUNGI GCP_PROJECT_ID (il tuo project-id) e GCP_SA_KEY (la chiave del tuo Service Account, in formato JSON)
+
