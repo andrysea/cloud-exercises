@@ -37,9 +37,12 @@ jobs:
       - name: Build Docker image
         run: docker build -t $IMAGE_NAME .
 
-      - name: Push Docker image
-        run: docker push $IMAGE_NAME
-
+      - name: Test login to Artifact Registry
+        run: |
+          docker login -u oauth2accesstoken \
+            -p "$(gcloud auth print-access-token)" \
+            https://europe-west1-docker.pkg.dev
+            
       - name: Test push access
         run: |
           docker login -u oauth2accesstoken -p "$(gcloud auth print-access-token)" https://europe-west1-docker.pkg.dev
